@@ -1,5 +1,5 @@
 from heapq import heappush, heappop
-
+print("1WN24CS099")        
 goal = (1, 2, 3,
         4, 5, 6,
         7, 8, 0)
