@@ -1,0 +1,71 @@
+#1WN24CS099
+
+
+def implication(a, b):
+    return (not a) or b
+
+
+def check_kb(model):
+    P = model["P"]
+    Q = model["Q"]
+    R = model["R"]
+
+    return (
+        (P==Q)
+        and (Q or R)
+        and (implication(not P,R))
+    )
+
+
+def check_query(model):
+    return model["R"]
+
+
+def tt_check_all(symbols, model):
+
+    if len(symbols) == 0:
+
+        if check_kb(model):
+            return check_query(model)
+
+        else:
+            return True
+
+    else:
+        P = symbols[0]
+
+        rest = symbols[1:]
+
+        model_true = model.copy()
+        model_true[P] = True
+
+        model_false = model.copy()
+        model_false[P] = False
+
+        return (
+            tt_check_all(rest, model_true)
+            and
+            tt_check_all(rest, model_false)
+        )
+
+
+def tt_entails():
+
+    symbols = ["P", "Q", "R"]
+
+    model = {}
+
+    return tt_check_all(symbols, model)
+
+
+if tt_entails():
+    print("KB entails Query")
+else:
+    print("KB does not entail Query")
+
+
+
+Output:
+
+
+KB does not entail Query
